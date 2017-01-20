@@ -1,0 +1,61 @@
+$(function() {
+        /*
+		//vars
+		var conveyor = $(".content-conveyor", $("#similar-images")),
+		item = $(".similar-cont", $("#similar-images"));
+		
+		//set length of conveyor
+		conveyor.css("width", item.length * parseInt(item.css("width"))+50);
+				
+        //config
+        var sliderOpts = {
+		  max: (item.length * parseInt(item.css("width"))) -   parseInt($(".viewer", $("#similar-images")).css("width")),
+          slide: function(e, ui) {
+            conveyor.css("left", "-" + ui.value + "px");
+          }
+        };
+
+        //create slider
+        $("#slider").slider(sliderOpts);
+        */
+        //Horizontal Slider
+        var conveyor = $(".content-conveyor", $(".selled-products")),
+		item = $(".similar-cont", $(".selled-products"));
+		
+		//set length of conveyor
+		conveyor.css("width", item.length * parseInt(item.css("width"))+50);
+				
+        //config
+        var sliderOpts = {
+		  max: (item.length * parseInt(item.css("width"))) -   parseInt($(".viewer", $(".selled-products")).css("width")),
+          slide: function(e, ui) {
+            conveyor.css("left", "-" + ui.value + "px");
+          }
+        };
+        
+        //create slider
+        $("#slider").slider(sliderOpts);
+
+        //Vertical Slider
+        var vconveyor = $(".vcontent-conveyor", $(".selled-products-vertical")),
+		vitem = $(".similar-cont", $(".selled-products-vertical"));
+		var vviewer = $(".vviewer", $(".selled-products-vertical"));
+		//set length of conveyor
+		vconveyor.css("height", vitem.length * parseInt(item.css("height"))+50);
+		var difference = vconveyor.height()-vviewer.height();
+        //config
+        var vsliderOpts = {
+          orientation:'vertical',
+          range: "min",
+          min: 0,
+	      max: 100,
+		  value: 100,
+          slide: function(e, ui) {
+            vconveyor.css({top:-((100-ui.value)*difference/100)});
+          }
+        };
+
+        //create slider
+        $("#vslider").slider(vsliderOpts);
+        
+      });

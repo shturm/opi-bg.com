@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/opi/!svn/ver/3/cake/tests/test_app/plugins/test_plugin
+END
+test_plugin_app_model.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/opi/!svn/ver/3/cake/tests/test_app/plugins/test_plugin/test_plugin_app_model.php
+END
+test_plugin_app_controller.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/opi/!svn/ver/3/cake/tests/test_app/plugins/test_plugin/test_plugin_app_controller.php
+END

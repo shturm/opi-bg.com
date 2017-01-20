@@ -1,0 +1,162 @@
+<?php
+class CartComponent extends Object {
+	
+	var $name = 'Cart';
+	var $components = array('Session');
+	
+	var $controller;
+	
+	//called before Controller::beforeFilter()
+	function initialize(&$controller, $settings = array()) {
+		// saving the controller reference for later use
+		$this->controller =& $controller;
+		// create the session variable if not already done
+		if (!$this->Session->read('Cart')) {
+			$this->Session->write('Cart', array());
+			// $this->Session->write('Cart.debug','just created');
+		} else $this->Session->delete('Cart.debug');
+		
+	}
+	
+	// add a product to cart
+	function add($product = null, $cart_options = null) {
+		$cart = $this->Session->read('Cart');
+		$item_type = key($product);
+		// handle quantity
+		if(isset($cart_options['quantity'])) {
+			$product[$item_type]['cart_quantity'] = $cart_options['quantity'];
+		} else $product[$item_type]['cart_quantity'] = 1;	
+	
+		if ($product) {
+			// add the item type if not already there
+			if (!array_key_exists($item_type, $cart)) {
+				//register the type
+				$this->Session->write('Cart.' . $item_type, array());
+				// since the item type has been just created - add the product, there is no instance of it for sure
+				$this->_add($product);
+			} else { // the type is defined, there might be a instance already
+				if (array_key_exists($product[$item_type]['id'], $cart[$item_type])) {
+					// there is an instance - increment the quantity as needed
+					
+					if (isset($cart_options['quantity'])) { 
+						// we have quantity selected
+						$cart[$item_type][$product[$item_type]['id']]['cart_quantity'] += $cart_options['quantity'];
+					} else {
+						// dont specified quantity - increment quantity with one
+						$cart[$item_type][$product[$item_type]['id']]['cart_quantity']++;
+					}
+					$this->Session->write('Cart', $cart);
+				} else  { 
+				// no instance of this product - add it
+					$this->_add($product);
+				}
+			}
+			
+			
+		} else { $this->Session->write('Cart.error','invalid product'); }
+		// $products[] = $id;
+		// $this->Session->write('Cart',$products);
+	}
+	
+	// delete item from cart
+	function delete($item, $reduce = 1) {
+		$cart = $this->Session->read('Cart');
+		$type = key($item);
+		
+		if ($reduce < $cart[$type][$item[$type]['id']]['cart_quantity'] ) {
+			$cart['status'] = 'quantity[' .$cart[$type][$item[$type]['id']]['cart_quantity'].'] - reduce[$reduce]';
+			// just reduce size
+			$cart[$type][$item[$type]['id']]['cart_quantity'] -= $reduce;
+		} else {
+			// delete whole item
+			$cart['status'] = 'deleting items';
+			unset($cart[$type][$item[$type]['id']]);
+		}
+		
+		$this->Session->write('Cart', $cart);
+	}
+	
+	function remove($item) {
+		$cart = $this->Session->read('Cart');
+		$type = key($item);
+		
+		unset($cart[$type][$item[$type]['id']]);
+		$this->Session->write('Cart', $cart);
+	}
+	
+	function change($item = null, $quantity = 1) {
+		$cart = $this->getCart();
+		$type = key($item);
+		
+		if($this->in_cart($item)) {
+			if (!$quantity < 1) {
+				$cart[$type][$item[$type]['id']]['cart_quantity'] = $quantity;
+				$this->Session->write('Cart',$cart); return true;
+			} else { 
+				unset($cart[$type][$item[$type]['id']]); 
+				$this->Session->write('Cart',$cart);
+				return true;
+			}
+		} else return false;
+	}
+	
+	function in_cart($item) {
+		$cart = $this->getCart();
+		$type = key($item);
+		
+		if(array_key_exists($item[$type]['id'], $cart[$type])) {
+			return true;
+		} else return false;
+	}
+	
+	// actually add the item, its unique
+	function _add($item) {
+		$cart = $this->getCart();
+		$type = key($item);
+		$cart[$type][$item[$type]['id']] = $item[$type];
+		// $cart_current_type = $cart[$type];
+		// array_push($cart_current_type ,$item[$type]['id'] => $item[$type]);
+		// $cart_current_type[] = array($item[$type]['id'] => $item[$type]);
+		$this->Session->write('Cart', $cart);
+		// $this->Session->write('Cart.add', 'here');
+		// $cart[$type][] = array($item['id'] => $item[$type]);
+		
+		
+		// $this->Session->write('Cart', $cart);
+	}
+	
+	
+	
+	function getCart() {
+		return $this->Session->read('Cart');
+	}
+	
+	// empty the cart
+	function trim() {
+		$this->Session->write('Cart', array());
+	}
+	
+	//called after Controller::beforeFilter()
+	function startup(&$controller) {
+	}
+
+	//called after Controller::beforeRender()
+	function beforeRender(&$controller) {
+	}
+
+	//called after Controller::render()
+	function shutdown(&$controller) {
+	}
+
+	//called before Controller::redirect()
+	function beforeRedirect(&$controller, $url, $status=null, $exit=true) {
+	}
+
+	function redirectSomewhere($value) {
+		// utilizing a controller method
+		$this->controller->redirect($value);
+	}
+	
+	
+}
+?>

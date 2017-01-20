@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/opi/!svn/ver/3/cake/tests/test_app/models/behaviors
+END
+persister_one_behavior.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/opi/!svn/ver/3/cake/tests/test_app/models/behaviors/persister_one_behavior.php
+END
+empty
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/opi/!svn/ver/3/cake/tests/test_app/models/behaviors/empty
+END
+persister_two_behavior.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/opi/!svn/ver/3/cake/tests/test_app/models/behaviors/persister_two_behavior.php
+END

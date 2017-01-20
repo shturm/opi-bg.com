@@ -1,0 +1,22 @@
+<h2 style="margin-left:20px;"><? echo $group['Group']['name']?></h2>
+<pre class="transparent" style="color:white;"> 
+	<? echo $group['Group']['description']?>
+</pre>
+<? if(!empty($group['ChildGroup'])): ?>
+<h2 style="margin-left:20px;">Подкатегории</h2>
+<? endif; ?>
+<ul class="black">
+	<? foreach($group['ChildGroup'] as $cg): ?>
+		<? if ($cg['is_active']): ?>
+		<li><? echo $html->link($cg['name'], array('action' => 'view', $cg['id'])); ?></li>
+		<? endif; ?>
+	<? endforeach; ?>
+</ul>
+<? if (!empty($popular_products)) echo $this->element('featured_products_horizontal', 
+						array('products' => $popular_products, 
+								'headline' => 'Популярни продукти от тази категория')); ?>
+
+
+<div id="product-list-cont">
+<? echo $this->element('product_index', array('products'=> $group['Product'], 'caller' => 'group')); ?>
+</div>

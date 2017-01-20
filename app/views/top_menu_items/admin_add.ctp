@@ -1,0 +1,28 @@
+<?php echo $this->Session->flash(); ?>
+<div id="admin-container">
+<div class="admin-actions">
+	<h3><?php __('Actions'); ?></h3>
+	<ul>
+
+		<li><?php echo $this->Html->link(__('List Top Menu Items', true), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('List Top Menu Items', true), array('controller' => 'top_menu_items', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Parent Top Menu Item', true), array('controller' => 'top_menu_items', 'action' => 'add')); ?> </li>
+	</ul>
+</div>
+<div class="topMenuItems form">
+<?php echo $this->Form->create('TopMenuItem');?>
+	<fieldset>
+		<legend><?php __('Admin Add Top Menu Item'); ?></legend>
+	<?php
+		echo $this->Form->input('name');
+		echo $this->Form->input('link', array('id' => 'link', /* 'style' => 'display: none' */));
+		echo $this->Form->input('link_picker', array('id' => 'link_picker', 'label' => 'Избор', 'options' => $picks, 'selected' => '#'));
+		echo $this->Form->input('parent_id');
+
+               echo $this->Form->submit(__('Submit', true));
+	 ?>
+	</fieldset>
+<?php echo $this->Form->end();?>
+</div>
+
+</div>

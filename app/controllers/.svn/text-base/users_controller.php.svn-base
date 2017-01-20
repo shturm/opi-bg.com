@@ -1,0 +1,251 @@
+<?php
+class UsersController extends AppController {
+
+	var $name = 'Users';
+	var $components = array('Email');
+	
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->deny('index');
+		// $this->Auth->authenticate = ClassRegistry::init('User');
+	}
+	function index() {
+		if($this->Auth->user()) {
+			$user = $this->User->findById($this->Auth->user('id'));
+			$this->set('user',$user);
+		} else {
+			$this->Session->setFlash('Трябва да влезете за да видите профила си');
+			$this->redirect('/users/login');
+		}
+		// debug($this->Auth->user());
+	}
+	
+	function login() {
+		// debug($this->Session->read());
+		// $this->Session->setFlash('ur passed password: ' . Security::hash($this->data['User']['password'], 'sha1', 'OASUIDyiouSDYFiuy988asd89y78yYASDg7y7871'));
+	}
+	
+	function logout() {
+		$this->Session->write('Auth');
+		$this->redirect($this->Auth->logout());
+	}
+	
+	function register($type = 'user') {
+				// debug($this->data);
+		
+		if (!empty($this->data)) {
+			if ($this->data['User']['password'] == $this->Auth->password($this->data['User']['password_confirm'])) {
+				$user = $this->data;
+				$user['User']['register_ip'] = $_SERVER['REMOTE_ADDR'];
+				$user['User']['confirmation_key'] = md5($user['User']['email'] . date(time()) );
+				//ensure no trasspassing of
+				switch($type) {
+					case 'user':
+						$user['User']['role'] = 'user';
+						break;
+					case 'shop':
+						$user['User']['role'] = 'shop';
+						break;
+					case 'vendor':
+						$user['User']['role'] = 'vendor';
+						break;
+					default:
+						$user['User']['role'] = 'user';
+						break;
+				}
+				
+				if ($this->User->save($user)) {
+					// user is registered
+					$this->_sendNewUserMail($user);
+					if($user['User']['role'] != 'user') {
+					$this->Session->setflash('Успешна регистрация. Инструкции за потвърждението са изпратени на посочения мейл. Тъй като акаунта Ви е фирмен той подлежи на ръчно удобрение преди да можете да влезете с него.');
+					} else $this->Session->setFlash('Успешна регистрация. Инструкции за потвърждение на акаунта са изпратени на посочения имейл.');
+					$this->redirect('/users/login');
+				} else {
+					// user couldn't been saved
+				}
+			} else  {
+				$this->Session->setFlash('Паролите не съвпадат');
+			}
+			// $this->data['User']['password'] = '';
+		}
+		// $this->data['User']['password'] = '';
+		// $this->data['User']['password_confirm'] = '';
+
+		// registration type - handled by the view logic
+		$this->set('type', $type);
+		
+		// DEBUGGING ONLY - REMOVE ON DEPLOYMENT !!
+		$this->User->recursive = 0;
+		$users = $this->User->find('all');
+		$this->set(compact('users'));
+		
+	}
+	
+	function recover($recovery_key = false) {
+		if (!empty($this->data)) {
+			// user requests password email
+			if($user = $this->User->findByEmail($this->data['User']['email'])) {
+				$user['User']['recovery_key'] = md5($user['User']['email'] . date(time()));
+				$user['User']['recovery_key_sent'] = date('Y-m-d H:i:s', time());
+				$this->User->save($user);
+				$this->_sendRecoverUserMail($user);
+				$this->Session->setFlash('На имейла ви е изпратено писмо с инструкции за възстановяване на паролата');
+			} else {
+				$this->Session->setFlash('Няма потребител с този имейл адрес');
+			}
+		} else if ($recovery_key) {
+			// user requests passowrd change due to provided recovery key
+			if ($user = $this->User->findByRecoveryKey($recovery_key)) {
+				$new_pass = substr(md5($user['User']['email'] . date(time())) , 0, 5);
+				$user['User']['password'] = $this->Auth->password($new_pass);
+				$user['User']['recovery_key'] ='';
+				$user['User']['recovery_key_sent'] = '';
+				$this->User->save($user);
+				$this->Session->setFlash('Новата ви парола е <b>'.$new_pass.'</b>. Можете да я смените след като влезете.');
+				$this->redirect('/users/login');
+			} else {
+				$this->Session->setFlash('Грешен код');
+				//TODO: Log this event as it might be offensive
+			}
+		} else {
+			// user neither provided recovery key to reset password nor is he requesting email
+			// $this->redirect('/users/');
+		}
+	}
+
+		function changepassword() {
+			//debug($this->Auth->user());
+			//debug($this->data);
+			//user is logged?
+			if ($user = $this->Auth->user()) {
+				$user = $this->User->findById($user['User']['id']); //need this since Auth component doesn't provide the pass hash
+				//is this a post ?
+				if(!empty($this->data)) {
+					//do the new password fields match ?
+					if ($this->data['User']['new_password'] == $this->data['User']['new_password_confirm']) {
+						//does the user remember his old password ?
+						if ($user['User']['password'] == $this->Auth->password($this->data['User']['old_password'])) {
+							//change the password and store it
+							$user['User']['password'] = $this->Auth->password($this->data['User']['new_password']);
+							$this->User->save($user);
+							$this->Session->setFlash('Паролата ви е успешно сменена.');
+							$this->redirect('/users/');
+						} else $this->Session->setFlash('Това не е старата ви парола');
+					} else $this->Session->setFlash('Полетата с новите пароли не съвпадат');
+				}
+			} else $this->Session->setFlash('Трябва да влезете за да смените паролата си. ');
+		}
+
+	function confirm($ckey) {
+		if ($user = $this->User->findByConfirmationKey($ckey)) {
+			//TODO: isnt this confirmation key too old ?
+			$user['User']['is_confirmed'] = true;
+			if ($user['User']['role'] == 'user') $user['User']['is_active'] = true;
+			$user['User']['date_registered'] = date('Y-m-d H:i:s', time());
+			$user['User']['confirmation_key'] = '';
+			if ($this->User->save($user)) {
+				$this->Session->setFlash('Успешно потвърдихте регистрацията на акаунта си.');
+			} else {
+				$this->Session->setFlash('Грешка при потвърждаването на потребителя.');
+				debug($this->User->validationErrors);
+			}
+			$this->set('type', $user['User']['role']);
+			// $this->redirect('/users/login');
+		} else {
+			$this->Session->setFlash('Няма такъв ключ.');
+			//TODO: log this action as it might be offensive
+		}
+	}
+ 
+
+	function _sendNewUserMail($user) {
+		$this->Email->to = $user['User']['email'];
+		// $this->Email->bcc = array('secret@example.com');  
+		$this->Email->subject = 'Регистрация Opi-bg.com';
+		$this->Email->replyTo = 'support@opi-bg.com';
+		$this->Email->from = 'No Reply <no-reply@opi-bg.com>';
+		$this->Email->template = 'user_register'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs = 'both'; // because we like to send pretty mail
+		//Set view variables as normal
+		$this->set('user', $user);
+		$this->set('confirmation_key', $user['User']['confirmation_key']);
+		//Do not pass any args to send()
+		$this->Email->send();
+	}
+
+	function _sendRecoverUserMail($user) {
+
+		$this->Email->to = $user['User']['email'];
+		// $this->Email->bcc = array('secret@example.com');  
+		$this->Email->subject = 'Изгубена парола за Opi-bg.com';
+		$this->Email->replyTo = 'support@opi-bg.com';
+		$this->Email->from = 'No Reply <no-reply@opi-bg.com>';
+		$this->Email->template = 'user_recover'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs = 'both'; // because we like to send pretty mail
+		//Set view variables as normal
+		$this->set('user', $user);
+		$this->set('recovery_key', $user['User']['recovery_key']);
+		//Do not pass any args to send()
+		$this->Email->send();
+	}
+
+	
+	// function admin_index() {
+		// $this->User->recursive = 0;
+		// $this->set('users', $this->paginate());
+	// }
+
+	// function admin_view($id = null) {
+		// if (!$id) {
+			// $this->Session->setFlash(__('Invalid user', true));
+			// $this->redirect(array('action' => 'index'));
+		// }
+		// $this->set('user', $this->User->read(null, $id));
+	// }
+
+	// function admin_add() {
+		// if (!empty($this->data)) {
+			// $this->User->create();
+			// if ($this->User->save($this->data)) {
+				// $this->Session->setFlash(__('The user has been saved', true));
+				// $this->redirect(array('action' => 'index'));
+			// } else {
+				// $this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
+			// }
+		// }
+	// }
+
+	// function admin_edit($id = null) {
+		// if (!$id && empty($this->data)) {
+			// $this->Session->setFlash(__('Invalid user', true));
+			// $this->redirect(array('action' => 'index'));
+		// }
+		// if (!empty($this->data)) {
+			// if ($this->User->save($this->data)) {
+				// $this->Session->setFlash(__('The user has been saved', true));
+				// $this->redirect(array('action' => 'index'));
+			// } else {
+				// $this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
+			// }
+		// }
+		// if (empty($this->data)) {
+			// $this->data = $this->User->read(null, $id);
+		// }
+	// }
+
+	// function admin_delete($id = null) {
+		// if (!$id) {
+			// $this->Session->setFlash(__('Invalid id for user', true));
+			// $this->redirect(array('action'=>'index'));
+		// }
+		// if ($this->User->delete($id)) {
+			// $this->Session->setFlash(__('User deleted', true));
+			// $this->redirect(array('action'=>'index'));
+		// }
+		// $this->Session->setFlash(__('User was not deleted', true));
+		// $this->redirect(array('action' => 'index'));
+	// }
+}

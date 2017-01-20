@@ -1,0 +1,89 @@
+<? echo $this->Session->flash(); ?>
+<? if (isset($order)): ?>
+<?
+			switch($order['Order']['status']) {
+				case 'pending':
+					$order['Order']['status'] = 'Изчакване';
+					break;
+				case 'sent':
+					$order['Order']['status'] = 'Изпратена';
+					break;
+				case 'rejected':
+					$order['Order']['status'] = 'Отказана';
+					break;
+				case 'canceled':
+					$order['Order']['status'] = 'Анулирана';
+					break;
+				case 'returned':
+					$order['Order']['status'] = 'Върната';
+					break;
+				default:
+					break;
+			}
+?>
+<h3>Информация за поръчка</h3>
+<table>
+	<tr>
+		<td>Код</td>
+		<td><? echo $order['Order']['track_hash']; ?></td>
+	</tr>
+	<tr>
+		<td>Номер</td>
+		<td><? echo $order['Order']['id']; ?></td>
+	</tr>	
+	<tr>
+		<td>Адрес за доставка</td>
+		<td><? echo $order['Order']['delivery_address']; ?></td>
+	</tr>
+	<tr>
+		<td>Адрес за кореспонденция</td>
+		<td><? echo $order['Order']['address']; ?></td>
+	</tr>
+	<tr>
+		<td>Лице за контакт</td>
+		<td><? echo $order['Order']['name']; ?></td>
+	</tr>
+	<tr>
+		<td>Телефон</td>
+		<td><? echo $order['Order']['phone']; ?></td>
+	</tr>
+	<tr>
+		<td>Създадена</td>
+		<td><? echo $order['Order']['date_created']; ?></td>
+	</tr>
+	<tr>
+		<td>Статус</td>
+		<td><? echo $order['Order']['status']; ?></td>
+	</tr>
+	<tr>
+		<td>Допълнителни указания</td>
+		<td><? echo $order['Order']['user_info']; ?></td>
+	</tr>
+	<tr>
+		<td>Допълнителна информация от Опи</td>
+		<td><? echo $order['Order']['track_info']; ?></td>
+	</tr>
+	<tr>
+		<td>Сума (общо)</td>
+		<td><? echo $order['Order']['total_sum']; ?></td>
+	</tr>
+	
+</table>
+<h3>Съдържание</h3>
+<table>
+	<th>Продукт</th>
+	<th>Брой</th>
+	<!-- <th>Цена (общо)</th> -->
+	
+<?
+	foreach($order['Product'] as $p) {
+		echo '<tr>';
+			echo '<td>' . $p['name'] . '</td>';
+			echo '<td>' . $p['OrdersProduct']['quantity'] . '</td>';
+			//echo '<td>' . $p['OrdersProduct']['total_price'] . '</td>';
+		echo '</tr>';
+	}
+	//debug($order);
+?>
+</table>
+<? endif; ?>

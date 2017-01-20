@@ -1,0 +1,99 @@
+<?php
+class CartController extends AppController {
+	var $name = 'Cart';
+	var $uses = array('Product');
+	var $components = array('Cart', 'RequestHandler');
+	
+	function index() {
+		// debug($this->params);
+		// debug($this->Cart->getCart());
+		$this->set('cart', $this->Cart->getCart());
+	}
+	
+	function add($id = null, $quantity = 1) {
+		$this->Product->recursive = 2;
+		// argument supplied
+		if ($id) {
+			// product exists
+			if ($p = $this->Product->findById($id)) {
+				// product is available
+				if ($p['Product']['is_active'] > 0) {
+					$this->Cart->add($p, array('quantity' => $quantity));
+					// debug($this->Cart->getCart());
+					$this->set('cart', $this->Cart->getCart());
+					if ($this->params['isAjax']) {
+						$this->set('cart', $this->Cart->getCart());
+						// header('Content-Type:application/json; charset=utf-8');
+						$this->layout = 'ajax';
+						$this->render('ajax');
+					} else $this->redirect(array('action' => 'index'));
+				}
+			}
+		}
+		// $this->redirect(array('action' => 'index'));
+		// debug($_SESSION);
+	}
+	
+	function delete($id = null, $reduce = 1) {
+		if ($id) {
+			if($product = $this->Product->findById($id)) {
+				$this->Cart->delete($product, $reduce);
+				if ($this->params['isAjax']) {
+					$this->set('cart', $this->Cart->getCart());
+					// header('Content-Type:application/json; charset=utf-8');
+					$this->layout = 'ajax';
+					$this->render('ajax');
+				} else $this->redirect(array('action' => 'index'));
+			} else $this->Session->setFlash(__('No product with this ID', true));
+			// $this->redirect(array('action'=>'index'));
+		} else $this->Session->setFlash(__('ID not as expected', true));
+		$this->redirect(array('action' => 'index'));
+		// debug($this->Cart->getCart());
+		// debug($this->params);
+	}
+	
+	function remove($id = null) {
+		if ($id) {
+			if ($product = $this->Product->findById($id)) {
+				$this->Cart->remove($product);
+				if ($this->params['isAjax']) {
+					$this->set('cart', $this->Cart->getCart());
+					// header('Content-Type:application/json; charset=utf-8');
+					$this->layout = 'ajax';
+					$this->render('ajax');
+				} else $this->redirect(array('action' => 'index'));
+			}
+		}
+	}
+	
+	// empty the cart
+	function trim() {
+		// debug(Router::parse($this->referer()));
+		$this->Cart->trim();
+		if ($this->params['isAjax']) {
+			$this->set('cart', $this->Cart->getCart());
+			// header('Content-Type:application/json; charset=utf-8');
+			$this->layout = 'ajax';
+			$this->render('ajax');
+		} else $this->redirect(array('action' => 'index'));
+	}
+	
+	function change($id= null, $quantity = 1) {
+		
+		if ($id) {
+			if($product = $this->Product->findById($id)) {
+				$this->Cart->change($product, $quantity);
+				if ($this->params['isAjax']) {
+					$this->set('cart', $this->Cart->getCart());
+					header('Content-Type:application/json; charset=utf-8');
+					$this->layout = 'ajax';
+					$this->render('ajax');
+				} else $this->redirect(array('action' => 'index'));
+			} else $this->Session->setFlash(__('No product with this ID', true));
+		} else $this->Session->setFlash(__('ID not as expected', true));
+		// $this->redirect(array('action' => 'index'));
+	}
+
+}
+
+?>

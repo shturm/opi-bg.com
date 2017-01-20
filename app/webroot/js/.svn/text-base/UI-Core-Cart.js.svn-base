@@ -1,0 +1,181 @@
+
+
+var CoreCart =
+{
+ //General Cart
+ //XHR urls
+ index_url:'http://opi.urghh.net/index',
+ change_url:"http://opi.urghh.net/cart/change",
+ add_url:"http://opi.urghh.net/cart/add",
+ remove_url:"http://opi.urghh.net/cart/remove",
+ trim_url:"http://opi.urghh.net/cart/trim",
+ 
+ total_price:0,
+ step_number:0,
+ back_step:function(){},
+ forward_step:function(){},
+ 
+ 
+ init:function()
+ {
+  this.count_update_event();
+  this.buy_button_event();
+  this.remove_button_event();
+  this.clear_button_event();
+  this.top_cart_button_order();
+  this.top_cart_button_event();
+ },
+ 
+ 
+ update_prices:function()
+ {
+   var $sum = 0;
+  $(".cart-final-price").each(function(){
+    $sum = $sum+ parseInt($(this).children("span").html());
+  })
+  $("#cart-price span").html($sum);
+ },
+ update_discount:function()
+ {
+  if($("#discount")[0] != undefined)
+  {
+   var $discount = parseFloat($("#discount").children("span").html());
+   var $price = parseFloat($("#cart-price span").html());
+   $("#cart-price-full span").html($price-($discount/100)*$price);
+  }
+ },
+ //Events 
+ count_update_event:function()
+  {
+  	var self = this;
+    $('input[name=\'buy-count\']').keypress(function(event){
+     if (event.which<48||event.which>57) {
+       event.preventDefault();
+    }});
+	$('input[name=\'buy-count\']').keyup(function (event) {
+
+	    if ($("#cart-view")[0] != undefined) {
+	        var $id = $(this).parents("tr").children(":first").children("div").children().val();
+	        var $forged = self.change_url + "/" + $id + "/" + $(this).val();
+	        console.log($forged);
+	        $.ajax({
+	            url: $forged,
+	            mimeType: 'text/html',
+	            success: function (data) {
+	                self.update_top_cart(data);
+	            }
+	        });
+	        if($(this).val()<6) price_value="single-value";
+	        if($(this).val()>=6) price_value="mult-value-6";
+	        if($(this).val()>=12) price_value="mult-value-6";
+	        var $price = $(this).parent().
+	        parent("tr").children("td").
+	        children('input[name=\"'+price_value+'\"]').val();
+	        $(this).parent().
+	        parent("tr").children("td").
+	        children('input[name=\"'+price_value+'\"]').children("span").html($price);
+	        $(this).parent().parent().children(".cart-final-price").children("span").
+	        html($(this).val() * $price);
+
+	        var $sum = 0;
+	        $(".cart-final-price").each(function () {
+	            $sum = $sum + parseInt($(this).children("span").html());
+	        })
+	        $("#cart-price span").html($sum);
+	        self.update_discount();
+	    }
+	});
+  },
+ 
+ /* Buy Button Event
+ 
+ */
+ buy_button_event:function()
+ {
+   var self = this;
+   $('input[name=\'buy-button\']').live("click",function(){
+	 //get id
+	 var $id = $(this).parent().children('input[name=\'buy-id\']').val();
+	 var $count = $(this).parent().children('input[name=\'buy-count\']').val();
+	 var $forged = self.add_url+"/"+$id+"/"+$count;
+	 $.get($forged,function(data){
+	  self.update_top_cart(data);
+	 });
+	});
+ },
+ /* Remove Button Event
+ 
+ */
+ remove_button_event:function()
+ {
+  var self = this;
+  $(".remove-item").click(function(){
+ 	var $id = $(this).children("input").val();
+ 	var $forged = self.remove_url+"/"+$id;
+ 	var $item = $(this).parent().parent();
+ 	$.get($forged,function(data){
+ 	    $item.remove();
+  		self.update_top_cart(data);
+  		self.update_prices();
+ 	});
+  });
+ },
+ /* Clear Button Event
+ 
+ */
+ clear_button_event:function()
+  {
+  	 var self = this;
+	$('input[name=\'clear-cart\']').click(function(){
+	 var $forged = self.trim_url;
+	 $.get($forged,function(data){
+	  $("#cart-view tbody>tr:has(input)").remove();
+	  self.update_top_cart(data);
+	  self.update_prices();
+	 });
+	});
+  },
+ 
+ 
+ //Top Cart
+ 
+ /*
+   Update Cart Dropdown data
+   @param data
+ */
+ update_top_cart:function(data)
+ {
+  $(".cart-cont").remove();
+  $("#outer-header").append(data);
+ },
+ /*
+    Top Cart Button Dropdown trigger
+ */
+ top_cart_button_event:function()
+ {
+  $(".cart-button").live("click",function(){
+	 if($(this).parent().parent().hasClass("closed"))
+	 {
+	  $(this).parent().parent().removeClass('closed');
+	  $(this).parent().parent().addClass('opened');
+	  $(".cart-button").addClass('pushed');
+	  $(this).parent().parent().children("#cart-dropdown").fadeIn("fast");
+	 }else 
+	 	  {
+	 	  	$(this).parent().parent().removeClass('opened');
+	 	  	$(this).parent().parent().addClass('closed');
+	 	  	$(".cart-button").removeClass('pushed');
+	        $(this).parent().parent().children("#cart-dropdown").fadeOut("fast");
+	 	  }
+	});
+ },
+ /*
+   Top Cart Order button event 
+ */
+ top_cart_button_order:function()
+ {
+  var self = this;
+  $("input[name=\"order-cart-button\"]").click(function(){window.location = self.index-url;});
+ }
+ /*End Of [Object]*/
+};

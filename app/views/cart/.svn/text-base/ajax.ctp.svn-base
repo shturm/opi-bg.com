@@ -1,0 +1,1 @@
+<? // return updated cart items	echo $this->element('top_cart', array('cart' => $cart));	//echo $cart;?>

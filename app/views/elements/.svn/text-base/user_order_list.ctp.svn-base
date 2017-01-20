@@ -1,0 +1,39 @@
+ <div id="user-profile-content">
+  <table id="p-table">
+		<tr class="tr-th">
+			<th>Номер</th>
+			<th>Статус</th>
+			<th>Сума</th>
+			<th>Дата на поръчката</th>
+		</tr>
+<?	if(isset($orders) && !empty($orders)): foreach($orders as $o): ?>
+		<? 	//translate order status to bg
+			switch($o['status']) {
+				case 'pending':
+					$o['status'] = 'Изчакване';
+					break;
+				case 'sent':
+					$o['status'] = 'Изпратена';
+					break;
+				case 'rejected':
+					$o['status'] = 'Отказана';
+					break;
+				case 'canceled':
+					$o['status'] = 'Анулирана';
+					break;
+				case 'returned':
+					$o['status'] = 'Върната';
+					break;
+				default:
+					break;
+			}
+		?>
+		<tr class="tr-bg">
+			<td><? echo $html->link($o['id'], '/orders/view/' . $o['track_hash']); ?></td>
+			<td><? echo $html->link($o['status'], '/orders/view/' . $o['track_hash']); ?></td>
+			<td><? echo $html->link($o['total_sum'], '/orders/view/' . $o['track_hash']); ?></td>
+			<td><? echo $html->link($o['date_created'], '/orders/view/' . $o['track_hash']); ?></td>
+		</tr>
+<? endforeach; endif; ?>
+	</table>
+</div>

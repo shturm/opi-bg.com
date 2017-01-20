@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/opi/!svn/ver/10/app/views/elements/email/text
+END
+user_register.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/opi/!svn/ver/10/app/views/elements/email/text/user_register.ctp
+END
+user_recover.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/opi/!svn/ver/10/app/views/elements/email/text/user_recover.ctp
+END
+message.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/opi/!svn/ver/10/app/views/elements/email/text/message.ctp
+END
+empty
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/opi/!svn/ver/3/app/views/elements/email/text/empty
+END

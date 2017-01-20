@@ -1,0 +1,72 @@
+<?php
+
+	$total =0;
+
+?>
+
+
+<div class="center-container">
+<h2>Количка</h2>
+<div id="action-cart-bar">
+  <div class="steps" ><div>Продукти</div></div><div class="arrow3"></div>
+  <div class="steps"  style="background-color:orange;"><div>Информация за доставка</div></div><div class="arrow2"></div>
+  <div class="steps"><div>Метод на плащане</div></div><div class="arrow"></div>
+  <div class="steps"><div>Потвърждение</div></div>
+</div>
+
+
+<table id="cart-view">
+    <tr>
+		<th></th>
+		<th>Продукт</th>
+		<th>Ед. Цена</th>
+		<th>Брой</th>
+		<th>Общо</th>
+	</tr>
+	<? if(!empty($cart)): ?>
+		<? foreach($cart as $type): ?>
+			<? if(is_array($type) && !empty($type)): foreach($type as $item): ?>
+			<? $total += $item['price']*$item['cart_quantity'];?>
+			<? 
+				if($this->Session->read('Auth.User.role') == 'vendor') {
+					$price = $item['vendor_price'];
+					$price_6 = $item['vendor_price_6'];
+					$price_12 = $item['vendor_price_12'];
+				} else if($this->Session->read('Auth.User.role') == 'shop') {
+					$price = $item['price'] - 0.4*$item['price'];
+					$price_6 = $item['price'] - 0.4*$item['price'];
+					$price_12 = $item['price'] - 0.4*$item['price'];
+				} else {
+					$price = $item['price'];
+					$price_6 = $item['price'];
+					$price_12 = $item['price'];
+				}
+			?>
+		<tr>
+			<td style="width:18px;"><div class="remove-item"><input type="hidden" value="<? echo $item['id'] ?>"></div></td>
+			<td><? echo $html->link($item['name'], '/products/view/' . $item['id']); ?></td>
+			<td class="t-center">
+                          <input type="hidden" name="single-value" value="<? echo $price; ?>">
+                          <input type="hidden" name="mult-value-6" value="<? echo $price_6; ?>">
+                          <input type="hidden" name="mult-value-12" value="<? echo $price_12; ?>">
+                          <span><? echo $item['price']; ?></span> лв.
+                        </td>
+			<td style="width:50px;"><input type="text" name="buy-count" size="4" value="<? echo $item['cart_quantity']; ?>"></td>
+			<td class="cart-final-price  t-center"><span><? echo $item['cart_quantity']*$item['price']; ?></span> лв.</td>
+			<? //debug($item['cart_quantity']*$item['price']); ?>
+		</tr>
+			<? endforeach; endif; ?>
+		<? endforeach; ?>
+	<? endif; ?>
+</table>
+<input name="clear-cart" type="button" value="Изчисти Количката">
+<div class="sep"><div id="cart-price">Общо: <span><? echo $total; ?></span>&nbspлв.</div></div>
+<div class="sep"><div id="discount">Персонална Отстъпка: -<span>20</span>%</div><div id="cart-price-full">След отстъпката: <span><? echo $total-$total/20; ?></span>&nbspлв.</div></div>
+
+<input name="next" type="button" value="&#1055;&#1088;&#1086;&#1076;&#1098;&#1083;&#1078;&#1080; &raquo">
+</div>
+<?
+if($this->Session->read('Auth.User.role') == 'vendor' || $this->Session->read('Auth.User.role') == 'shop') {
+	echo '<p>Показаните цени са съобразени с бройката и типа на всеки продукт, както и с типа на вашия акаунт.</p>';
+}
+?>

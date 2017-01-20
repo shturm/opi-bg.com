@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/opi/!svn/ver/3/cake/console/templates/skel/webroot
+END
+test.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/opi/!svn/ver/3/cake/console/templates/skel/webroot/test.php
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/opi/!svn/ver/3/cake/console/templates/skel/webroot/.htaccess
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/opi/!svn/ver/3/cake/console/templates/skel/webroot/index.php
+END
+css.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/opi/!svn/ver/3/cake/console/templates/skel/webroot/css.php
+END
+favicon.ico
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/opi/!svn/ver/3/cake/console/templates/skel/webroot/favicon.ico
+END

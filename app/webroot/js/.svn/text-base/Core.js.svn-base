@@ -1,0 +1,47 @@
+
+$(document).ready(function() {
+  
+  //Initialization Phase
+  HTMLDivElement.prototype.animating = false;
+  HTMLDivElement.prototype.prev_top = -1;
+  HTMLDivElement.prototype.prev_left = -1;
+  
+  
+  //User
+$("#user-button").live("click",function(){
+ if($("#user-button").css("background-position")!="0px 15px"){
+  
+  $("#user-button").css("background-position","0px 15px");
+  $("#user-dropdown").fadeIn("fast");
+ }else {
+  $("#user-button").css("background-position","0 0");
+  $("#user-dropdown").fadeOut("fast");
+ }
+ 
+ //Product View
+ $("#other-images img").live("click",function(){
+   var $new_src = $(this).attr("src");
+		$("#full-image img").attr("src",$new_src);
+	$("#other-images img").css("border-left","3px solid grey");
+	$("#other-images img").removeClass("selected");
+	$(this).addClass("selected");
+	$(this).css("border-left","3px solid orange");
+  });
+ 
+ $("#other-images img").live("mouseover",function(){
+  if(!$(this).hasClass("selected"))
+    $(this).css("border-left","3px solid orange");
+ });
+ 
+ $("#other-images img").live("mouseout",function(){
+	if(!$(this).hasClass("selected"))
+	 $(this).css("border-left","3px solid grey");
+ });
+ });
+ 
+  //var Cart = new CoreCart();
+  CoreCart.init();
+  CoreMenu.init();
+  CoreTabs.init();
+  
+});

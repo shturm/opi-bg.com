@@ -1,0 +1,3 @@
+<div id="product-list-cont">
+<? echo $this->element('product_index', array('products'=> $products)); ?>
+</div>

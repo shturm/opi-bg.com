@@ -1,0 +1,30 @@
+<?php
+	$total = 0;
+	if (!empty($cart)) {
+		foreach($cart as $type) {
+			if (is_array($type) && !empty($type)) {
+				foreach($type as $item) {
+					$total += $item['price']*$item['cart_quantity'];
+				}
+			}
+		}
+	}
+?>
+<div class="cart-cont closed"><div style="height:20px;">
+<div style="float:left;width:150px;"><a href="/cart">Количка (<? echo $total;?>) лв.</a></div><div class="cart-button"></div></div>
+ <div id="cart-dropdown">
+ <?  if (!empty($cart)): foreach($cart as $type): ?>
+	<? if(!empty($type) && is_array($type))foreach($type as $item): ?>
+		<div class="cart-item">
+			<div style="float:left;"><? echo $item['name']; ?></div> 
+			<div style="float:right;">Брой:
+				<span><? echo $item['cart_quantity']; ?>x[<? echo $item['price']; ?> лв.]</span>
+			</div>
+		</div>
+	<? endforeach; ?>
+ <? endforeach; endif;?>
+ <div id="summary">Общо: <? echo $total; ?> лв.</div>  
+ <span>*Цените са с включено ДДС</span>  
+ <input type="button" name="order-cart-button" value="Поръчай">  
+ </div>
+</div>

@@ -1,0 +1,22 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.opi\-bg\.com$
+RewriteRule ^(.*)$ "http\:\/\/opi\-bg\.com\/$1" [R=301,L]
+
+#RewriteOptions inherit
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteRule    ^$ app/webroot/    [L]
+	RewriteRule    (.*) app/webroot/$1 [L]
+	
+	#RewriteEngine On
+	#RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+	#RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+</IfModule>
+
+#RewriteCond %{HTTP_HOST} ^www\.opi\-bg\.com$
+#RewriteRule ^(.*)$ "http\:\/\/opi\-bg\.com\/$1" [R=301,L]
+
+
+
+
+

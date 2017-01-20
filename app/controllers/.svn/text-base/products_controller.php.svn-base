@@ -1,0 +1,177 @@
+<?php
+class ProductsController extends AppController {
+
+	var $name = 'Products';
+	var $components = array('Cart');
+	
+	function index() {
+		// $this->Product->recursive = 0;
+		// $this->set('products', $this->paginate());
+		$this->Product->order = 'Product.id DESC';
+		$this->set('products', $this->Product->find('all', array('conditions' => array('Product.is_active' => true) ) ));
+		if(!empty($this->params['named'])) {
+			switch($this->params['named']['view']) {
+				case 'list':
+					$this->render('index_list');
+					break;
+				case 'list_tiles':
+					$this->render('index_list_tiles');
+					break;
+				default:
+					break;
+				
+			}
+		}
+	}
+	
+	function view($id = null) {
+		if (is_numeric($id)) {
+			if($p = $this->Product->findById($id)) {
+				if ($p['Product']['is_active'] == true) {
+					$this->set('product', $p);
+					$p['Product']['impressions']++;
+					$this->Product->save($p);
+				} else $this->redirect(array('controller' => 'pages', 'action'=>'view', '1'));
+			} else $this->redirect(array('controller' => 'pages', 'action'=>'view', '1'));		
+		} else $this->redirect(array('controller' => 'pages', 'action'=>'view', '1'));	
+		// $this->redirect('/cart');
+	}
+	
+	function lacquers() {
+		$conditions['Product.is_active'] = true;
+		$conditions['Product.type'] = 'lacquer';
+		$this->paginate = array('conditions' => $conditions);
+		$data = $this->paginate('Product');
+		$this->set('products', $data);
+		if(!empty($this->params['named'])) {
+			switch($this->params['named']['view']) {
+				case 'list':
+					$this->render('index_list');
+					break;
+				case 'list_tiles':
+					$this->render('index_list_tiles');
+					break;
+				default:
+					$this->render('index');
+					break;
+				
+			}
+		} else $this->render('index');
+	}
+	
+	function collections() {
+		$conditions['Product.is_active'] = true;
+		$conditions['Product.type'] = 'collection';
+		$this->paginate = array('conditions' => $conditions);
+		$data = $this->paginate('Product');
+		$this->set('products', $data);
+		if(!empty($this->params['named'])) {
+			switch($this->params['named']['view']) {
+				case 'list':
+					$this->render('index_list');
+					break;
+				case 'list_tiles':
+					$this->render('index_list_tiles');
+					break;
+				default:
+					$this->render('index');
+					break;
+				
+			}
+		} else $this->render('index');	
+	}
+	
+	function promotions() {
+		$conditions['Product.is_active'] = true;
+		$conditions['Product.type'] = 'promotion';
+		$this->paginate = array('conditions' => $conditions);
+		$data = $this->paginate('Product');
+		$this->set('products', $data);
+		if(!empty($this->params['named'])) {
+			switch($this->params['named']['view']) {
+				case 'list':
+					$this->render('index_list');
+					break;
+				case 'list_tiles':
+					$this->render('index_list_tiles');
+					break;
+				default:
+					$this->render('index');
+					break;
+				
+			}
+		} else $this->render('index');		
+	}
+	
+	function admin_index() {
+		// $this->Product->recursive = 0;
+		$this->set('products', $this->paginate());
+	}
+
+	function admin_view($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid product', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->set('product', $this->Product->read(null, $id));
+	}
+
+	function admin_add() {
+		if (!empty($this->data)) {
+			$this->Product->create();
+			if ($this->Product->save($this->data)) {
+				$this->Session->setFlash(__('The product has been saved', true));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The product could not be saved. Please, try again.', true));
+			}
+		}
+		$groups = $this->Product->Group->find('list');
+		$collections = $this->Product->Collection->find('list');
+		$images = $this->Product->Image->find('list');
+		$orders = $this->Product->Order->find('list');
+		$this->set(compact('groups', 'collections', 'images', 'orders'));
+	}
+
+	function admin_copy($id = null) {
+		if($this->Product->read()) {
+		
+		}
+	}
+
+	function admin_edit($id = null) {
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Invalid product', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		if (!empty($this->data)) {
+			if ($this->Product->save($this->data)) {
+				$this->Session->setFlash(__('The product has been saved', true));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The product could not be saved. Please, try again.', true));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Product->read(null, $id);
+		}
+		$groups = $this->Product->Group->find('list');
+		$collections = $this->Product->Collection->find('list');
+		$images = $this->Product->Image->find('list');
+		$orders = $this->Product->Order->find('list');
+		$this->set(compact('groups', 'collections', 'images', 'orders'));
+	}
+
+	function admin_delete($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for product', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		if ($this->Product->delete($id)) {
+			$this->Session->setFlash(__('Product deleted', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		$this->Session->setFlash(__('Product was not deleted', true));
+		$this->redirect(array('action' => 'index'));
+	}
+}

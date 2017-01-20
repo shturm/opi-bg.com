@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 24
+/svn/opi/!svn/ver/3/cake
+END
+LICENSE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/opi/!svn/ver/3/cake/LICENSE.txt
+END
+VERSION.txt
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/opi/!svn/ver/3/cake/VERSION.txt
+END
+bootstrap.php
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/opi/!svn/ver/3/cake/bootstrap.php
+END
+basics.php
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/opi/!svn/ver/3/cake/basics.php
+END
+dispatcher.php
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/opi/!svn/ver/3/cake/dispatcher.php
+END

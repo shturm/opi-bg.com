@@ -1,0 +1,120 @@
+﻿<?php
+/**
+ * Application level Controller
+ *
+ * This file is application-wide controller file. You can put all
+ * application-wide controller-related methods here.
+ *
+ * PHP versions 4 and 5
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       cake
+ * @subpackage    cake.app
+ * @since         CakePHP(tm) v 0.2.9
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+/**
+ * Application Controller
+ *
+ * Add your application-wide methods in the class below, your controllers
+ * will inherit them.
+ *
+ * @package       cake
+ * @subpackage    cake.app
+ */
+class AppController extends Controller {
+	var $components = array('Session', 'Cart', 'Auth');
+	var $uses = array('PageLoad', 'Product');
+	
+	// logs the page load
+	function _log_impresion() {
+		$this->PageLoad->create();
+		$pl = array(
+			'ip' => $_SERVER['REMOTE_ADDR'], 
+			'user_id' => '', //TODO: add the user if he's logged
+			'when' => date('Y-m-d H:i:s'), 
+			'url' => $this->params['url']['url'], 
+			'referer' => $this->referer(), 
+			'type' => 'other', 
+			'controller' => $this->params['controller'],
+			'action' => $this->params['action'],
+			'status' => 'OK'
+		);
+		// view if it's product/collection/promotion
+		if ($pl['controller'] == 'products') {
+			if ($pl['action'] == 'view') {
+				if ($product = $this->Product->get($this->params['pass'][0])) {
+					if ($product['Product']['is_collection'] > 0) {
+						$pl['type'] = 'collection';
+					} else if ($product['Product']['is_promotion'] > 0) {
+						$pl['type'] = 'promotion';				
+					} else {
+						$pl['type'] = 'product';					
+					}
+				} else {
+					$pl['type'] = 'product';
+					$pl['status'] = 'FAIL';			
+				}
+			} else {
+				$pl['type'] = 'product';
+				// $pl['status'] = 'FAIL';	
+			}
+		}
+		// view if it's page/presentation
+		if ($pl['controller'] == 'pages') {
+			if ($pl['action'] == 'view') {
+				if ($page = $this->Page->get($this->params['pass'][0])) {
+					if ($page['Page']['is_presentation'] > 0) {
+						$pl['type'] = 'presentation';
+					} else {
+						$pl['type'] = 'page';
+					}
+				} else {
+					$pl['type'] = 'page';
+					$pl['status'] = 'FAIL';
+				}
+			} else {
+				$pl['type'] = 'page';
+			}
+		}
+		$this->PageLoad->save(array('PageLoad' => $pl));
+	}
+	
+	function beforeFilter() {
+		$this->Auth->allow('*');
+		$this->Auth->fields = array(
+			'username' => 'email',
+			'password' => 'password'
+		);
+		$this->Auth->loginError = "Грешно потребителско име или парола !";    
+		$this->Auth->authError = "За достъп до този ресурс трябва да имате <b><a href='/users/login'>влезете</a></b> или да се <b><a href='/users/register'> регистрирате</a></b>";	
+		$this->Auth->userScope = array('User.is_active' => true, 'User.is_confirmed' => true);
+		if ($user = $this->Auth->user())  {
+			$this->set('user', $this->Auth->user()); 
+		} else {
+			// $this->Session->write('Auth.User.name', 'Гост');
+			// $this->set('user', $this->Auth->user()); 
+		}
+		$this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
+		
+		$this->set('cart', $this->Cart->getCart());
+		// logs the impresion
+		// fix this shit: 
+		// Notice (8): Undefined index: is_collection [APP\app_controller.php, line 55]
+		// Notice (8): Undefined index: is_promotion [APP\app_controller.php, line 57]
+		// Warning (2): Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\opi\cake\libs\debugger.php:673) [CORE\cake\libs\controller\controller.php, line 742]
+		// $this->_log_impresion();
+	/* 	
+		$this->Auth->loginError = "Грешно потребителско име или парола";    
+		$this->Auth->authError = "За достъп до този ресурс трябва да имате <b><a href='/users/login'>влезете</a></b> или да се <b><a href='/users/register'> регистрирате</a></b>";
+		$this->Auth->allow("register", "display"); */
+	}
+}

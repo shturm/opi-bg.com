@@ -1,0 +1,22 @@
+﻿<?
+// if (isset($user)) debug($user);
+//debug($this->Session->read());
+// debug($this->Session->read('Auth'));
+echo $this->Session->flash();
+?>
+
+
+<div id="user-profile-container" class="center-container">
+ <div id="big-nav">
+  <div>
+  <a href="#por"><div class="big-nav-item prof1"></div></a>
+  <a href="#po1r"><div class="big-nav-item prof2"></div></a>
+  <a href="#por2"><div class="big-nav-item prof3"></div></a>
+  </div>
+ </div>
+ 
+ <h3>Последни Поръчки</h3>
+ <? if(!empty($user['Order'])) echo $this->element('user_order_list', array('orders' => $user['Order'])); ?>
+
+ 
+</div>

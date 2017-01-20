@@ -1,0 +1,73 @@
+
+
+var CoreMenu =
+{
+ //Top Menu
+ init:function()
+ {
+  this.level0_init();
+  this.dropdown_init();
+  this.lower_menu_init();
+ },
+ 
+ level0_init:function()
+ {
+ 	$("#inner-header li.level-0").mouseover(function() {
+    	var $drop = $(this).children(".dropdown-menu");
+    	var isOverflowing = ($(this).offset().left+$drop.width() ) > 1024;
+    	if(isOverflowing){
+    		$(this).children(".dropdown-menu").addClass('right-dropdown');
+    		$(this).children(".dropdown-menu").css('margin-left',-$drop.width()/2+2)
+    	}
+    	$(this).children(".dropdown-menu").css("display", "block");
+    });
+    $("#inner-header li.level-0").mouseout(function() {
+      $(this).children(".dropdown-menu").css("display", "none");
+	});
+ },
+
+ dropdown_init:function()
+ {
+	$(".dropdown-menu li").live("mouseover", function() {
+    if($(this).parent().parent().hasClass('right-dropdown'))
+     {
+      $(this).children(".dropdown-menu").addClass('right-dropdown');
+     }
+    $(this).children(".dropdown-menu").css("display", "block");
+   });
+   $(".dropdown-menu li").live("mouseout", function() {
+     $(this).children(".dropdown-menu").css("display", "none");
+   });
+ },
+ 
+ //Lower Menu
+ lower_menu_init:function()
+ {
+  $(".lower-item").mouseover(function() {
+	
+	if($(this)[0].animating==false)
+	{
+	 $(".lower-item").animating = false;
+	 $(".lower-item").css("margin-top","0px");
+	 $(".lower-item").parent().children(".hover-blob").css("display","none");
+	 $(this)[0].animating = true;
+	 $(this).css("margin-top","-15px");
+     $(this).parent().children(".hover-blob").fadeIn("fast",function(){ 
+      $(this).parent().children(".lower-item")[0].animating=false;
+     });
+    }
+  });
+  
+  $(".lower-item").mouseout(function() {
+   	if($(this)[0].animating==false)
+	{
+	 $(this)[0].animating = true;
+	 $(this).css("margin-top","0px");
+     $(this).parent().children(".hover-blob").fadeOut("fast",function(){ 
+     $(this).parent().children(".lower-item")[0].animating=false;
+    });
+    }
+  });
+ }
+/*End Of [Object]*/
+};

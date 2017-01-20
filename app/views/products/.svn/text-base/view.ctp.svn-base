@@ -1,0 +1,53 @@
+﻿<div id="image-column">
+        <div id="full-image">
+         <? if ($product['Thumb']) echo $html->image($product['Thumb']['path']);
+			
+		 ?>
+        </div>
+
+        <div class="section-title">
+            &#1044;&#1088;&#1091;&#1075;&#1080; &#1048;&#1079;&#1086;&#1073;&#1088;&#1072;&#1078;&#1077;&#1085;&#1080;&#1103;
+        </div>
+
+        <div id="other-images">
+			<? 	foreach($product['Image'] as $img) {
+					echo $html->image($img['path']);
+				}
+			?>
+<!--         <img src="opi_imgs/al114_jojobaglo_4oz.jpg" alt=""/>
+        <img src="opi_imgs/al114_jojobaglo_4oz.jpg" alt=""/>
+        <img src="opi_imgs/al114_jojobaglo_4oz.jpg" alt=""/> -->
+                  
+        </div>
+
+        <div>
+            <div class="section-title">
+               &#1055;&#1086;&#1076;&#1086;&#1073;&#1085;&#1080; &#1055;&#1088;&#1086;&#1076;&#1091;&#1082;&#1090;&#1080;
+            </div>
+
+            <div id="similar-images">
+                <div class="viewer">
+                    <div class="content-conveyor ui-helper-clearfix">
+                        <div class="similar-cont">
+                             <? if ($product['Thumb']) echo $html->image($product['Thumb']['path']); //TODO: Add similar products ?>
+                                  <span>Similar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slider"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="product-information">
+        <h3><? echo $product['Product']['name']?></h3>
+		<? echo $product['Product']['description']; ?>
+    <div id="product-actions">
+      {Във Наличност Image + Count}
+      <label>Брой:</label><input type="text" name="buy-count" size="2" value="1">
+      <input type="hidden" name="buy-id" value="<? echo $product['Product']['id']?>">
+      <input type="button" name="buy-button" value="Купи">
+    </div>
+    </div>
+<? //debug($product); ?>

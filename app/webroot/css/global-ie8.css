@@ -1,0 +1,32 @@
+
+    #inner-tabs ul
+    {
+     margin-top:110px;
+    }
+    .close div
+    {
+    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    margin-top:-20px;
+    width:95px;
+    }
+    #inner-tabs div.tab-text
+    {
+     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true',src='/images/tab_image.png')progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+     background-image:none;
+     zoom: 1;
+    }
+    .tab-content
+    {
+      margin-left:30px;
+      margin-top:1px;
+    }
+    .lower-item img { border:none; }
+    .dropdown-menu { height:auto; min-height:0px; }
+    .dropdown-menu li > a { display:block; width:105%;}
+    .dropdown-menu.level-1 { margin-left:100%; }
+        .larger-fieldset
+{
+ width: 540px;
+ margin-left:40px;
+}
+.similar-cont img { border:none; }

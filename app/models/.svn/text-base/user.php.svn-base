@@ -1,0 +1,145 @@
+<?php
+class User extends AppModel {
+	var $name = 'User';
+	var $displayField = 'email';
+	var $validate = array(
+		'email' => array(
+			'email' => array(
+				'rule' => array('email'),
+				'message' => 'Валиден имейл адрес е необходим за да довършите регистрацията',
+				'allowEmpty' => false,
+				'required' => true,
+				// 'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'unique' => array(
+				'rule' => 'isUnique',
+				'message' => 'Този адрес вече е зает'
+			)
+		),
+		'password' => array(
+			'min' => array(
+				'rule' => array('minLength', 4),
+				'message' => 'Паролата трябва да е поне 4 символа',
+				// 'allowEmpty' => false,
+				// 'required' => true,	
+			),
+			'notempty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Трябва да въведете парола'
+			)
+			// 'max' => array(
+				// 'rule' => array('maxLength', 18),
+				// 'message' => 'Паролата трябва да е максимум 18 символа'
+				// 'allowEmpty' => false,
+				// 'required' => true,	
+			// )
+		),
+		'password_confirm' => array(
+			'notempty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Ползването на парола е задължително'
+			)
+		),
+		'license_code' => array(
+			'unique' => array(
+				'rule' => 'isUnique',
+				'message' => 'Този лицензен код е вече зает',
+				'on' => 'create'
+			),
+			'notempty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Лицензният код е задължителен за попълване за да се гарантира истинноста на вашият акаунт',
+				'on' => 'create'
+			)
+		)
+		// 'name' => array(
+			// 'present' => array(
+				// 'rule' => 'notEmpty',
+				// 'allowEmpty' => true,		
+				// 'required' => false,	
+				// 'message' => 'Това поле е задължително за изпълнение на доставка'
+			// )
+		// ),			
+		// 'sur_name' => array(
+			// 'present' => array(
+				// 'rule' => 'notEmpty',
+				// 'allowEmpty' => false,		
+				// 'required' => true,	
+				// 'message' => 'Това поле е задължително за изпълнение на доставка'
+			// )
+		// ),
+		// 'family_name' => array(
+			// 'present' => array(
+				// 'rule' => 'notEmpty',
+				// 'allowEmpty' => false,		
+				// 'required' => true,	
+				// 'message' => 'Това поле е задължително за изпълнение на доставка'
+			// )
+		// ),
+		// 'address' => array(
+			// 'present' => array(
+				// 'rule' => 'notEmpty',
+				// 'allowEmpty' => false,		
+				// 'required' => false,	
+				// 'message' => 'Това поле е задължително за изпълнение на доставка'
+			// )
+		// ),
+		// 'delivery_address' => array(
+			// 'present' => array(
+				// 'rule' => 'notEmpty',
+				// 'allowEmpty' => true,		
+				// 'required' => false,	
+				// 'message' => 'Това поле е задължително за изпълнение на доставка'
+			// )
+		// ),		
+		// 'phone' => array(
+			// 'present' => array(
+				// 'rule' => 'notEmpty',
+				// 'allowEmpty' => true,		
+				// 'required' => true,	
+				// 'message' => 'Това поле е задължително за изпълнение на доставка'
+			// )
+		// ),
+		// Vendor/Shop data validation goes here
+		// 'company' => array(
+			// 'unique' => array(
+				// 'rule' => 'isUnique',
+				// 'message' => 'Това име на фирма вече е заето'			
+			// )
+		// ),
+	);
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+	var $hasMany = array(
+		'Order' => array(
+			'className' => 'Order',
+			'foreignKey' => 'user_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
+	function test() {
+		echo 'lolllll';
+	}
+	
+    // function hashPasswords($data) {
+        // if (isset($data['User']['password'])) {
+            // $data['User']['password'] = md5($data['User']['password']);
+            // return $data;
+        // }
+        // return $data;
+    // }	
+	
+	// function onBeforeSave($data) {
+		// $data['User']['passowrd'] = md5(
+	// }
+}

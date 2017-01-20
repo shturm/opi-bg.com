@@ -1,0 +1,296 @@
+<div class="users view">
+<h2><?php  __('User');?></h2>
+	<dl><?php $i = 0; $class = ' class="altrow"';?>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['id']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Username'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['username']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Password'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['password']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Email'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['email']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('First Name'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['first_name']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Sur Name'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['sur_name']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Family Name'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['family_name']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Address'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['address']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Delivery Address'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['delivery_address']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Phone'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['phone']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Company'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['company']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Mol'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['mol']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Bulstat'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['bulstat']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Dds'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['dds']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Egn'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['egn']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Salon'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['salon']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Confirmation Key'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['confirmation_key']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Confirmation Key Sent'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['confirmation_key_sent']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Recovery Key'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['recovery_key']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Recovery Key Sent'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['recovery_key_sent']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Role'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['role']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Register Ip'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['register_ip']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Last Ip'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['last_ip']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Last Login Date'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['last_login_date']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Date Registered'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['date_registered']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Is Active'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['is_active']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Is Confirmed'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['is_confirmed']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Personal Discount'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['personal_discount']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Vendor Discount'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['vendor_discount']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Semivendor Discount'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $user['User']['semivendor_discount']; ?>
+			&nbsp;
+		</dd>
+	</dl>
+</div>
+<div class="actions">
+	<h3><?php __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('Edit User', true), array('action' => 'edit', $user['User']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete User', true), array('action' => 'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Users', true), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New User', true), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Orders', true), array('controller' => 'orders', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Order', true), array('controller' => 'orders', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Page Loads', true), array('controller' => 'page_loads', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Page Load', true), array('controller' => 'page_loads', 'action' => 'add')); ?> </li>
+	</ul>
+</div>
+<div class="related">
+	<h3><?php __('Related Orders');?></h3>
+	<?php if (!empty($user['Order'])):?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php __('Id'); ?></th>
+		<th><?php __('User Id'); ?></th>
+		<th><?php __('User Role'); ?></th>
+		<th><?php __('Email'); ?></th>
+		<th><?php __('First Name'); ?></th>
+		<th><?php __('Sur Name'); ?></th>
+		<th><?php __('Family Name'); ?></th>
+		<th><?php __('Address'); ?></th>
+		<th><?php __('Delivery Address'); ?></th>
+		<th><?php __('Phone'); ?></th>
+		<th><?php __('Company'); ?></th>
+		<th><?php __('Mol'); ?></th>
+		<th><?php __('Bulstat'); ?></th>
+		<th><?php __('Dds'); ?></th>
+		<th><?php __('Egn'); ?></th>
+		<th><?php __('Salon'); ?></th>
+		<th><?php __('Ip Of Order'); ?></th>
+		<th><?php __('Status'); ?></th>
+		<th><?php __('Date Created'); ?></th>
+		<th><?php __('User Info'); ?></th>
+		<th><?php __('Track Info'); ?></th>
+		<th><?php __('Total Sum'); ?></th>
+		<th class="actions"><?php __('Actions');?></th>
+	</tr>
+	<?php
+		$i = 0;
+		foreach ($user['Order'] as $order):
+			$class = null;
+			if ($i++ % 2 == 0) {
+				$class = ' class="altrow"';
+			}
+		?>
+		<tr<?php echo $class;?>>
+			<td><?php echo $order['id'];?></td>
+			<td><?php echo $order['user_id'];?></td>
+			<td><?php echo $order['user_role'];?></td>
+			<td><?php echo $order['email'];?></td>
+			<td><?php echo $order['first_name'];?></td>
+			<td><?php echo $order['sur_name'];?></td>
+			<td><?php echo $order['family_name'];?></td>
+			<td><?php echo $order['address'];?></td>
+			<td><?php echo $order['delivery_address'];?></td>
+			<td><?php echo $order['phone'];?></td>
+			<td><?php echo $order['company'];?></td>
+			<td><?php echo $order['mol'];?></td>
+			<td><?php echo $order['bulstat'];?></td>
+			<td><?php echo $order['dds'];?></td>
+			<td><?php echo $order['egn'];?></td>
+			<td><?php echo $order['salon'];?></td>
+			<td><?php echo $order['ip_of_order'];?></td>
+			<td><?php echo $order['status'];?></td>
+			<td><?php echo $order['date_created'];?></td>
+			<td><?php echo $order['user_info'];?></td>
+			<td><?php echo $order['track_info'];?></td>
+			<td><?php echo $order['total_sum'];?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View', true), array('controller' => 'orders', 'action' => 'view', $order['id'])); ?>
+				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'orders', 'action' => 'edit', $order['id'])); ?>
+				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'orders', 'action' => 'delete', $order['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $order['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Order', true), array('controller' => 'orders', 'action' => 'add'));?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php __('Related Page Loads');?></h3>
+	<?php if (!empty($user['PageLoad'])):?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php __('Id'); ?></th>
+		<th><?php __('Ip'); ?></th>
+		<th><?php __('User Id'); ?></th>
+		<th><?php __('When'); ?></th>
+		<th><?php __('Url'); ?></th>
+		<th><?php __('Referer'); ?></th>
+		<th><?php __('Type'); ?></th>
+		<th><?php __('Controller'); ?></th>
+		<th><?php __('Action'); ?></th>
+		<th><?php __('Status'); ?></th>
+		<th class="actions"><?php __('Actions');?></th>
+	</tr>
+	<?php
+		$i = 0;
+		foreach ($user['PageLoad'] as $pageLoad):
+			$class = null;
+			if ($i++ % 2 == 0) {
+				$class = ' class="altrow"';
+			}
+		?>
+		<tr<?php echo $class;?>>
+			<td><?php echo $pageLoad['id'];?></td>
+			<td><?php echo $pageLoad['ip'];?></td>
+			<td><?php echo $pageLoad['user_id'];?></td>
+			<td><?php echo $pageLoad['when'];?></td>
+			<td><?php echo $pageLoad['url'];?></td>
+			<td><?php echo $pageLoad['referer'];?></td>
+			<td><?php echo $pageLoad['type'];?></td>
+			<td><?php echo $pageLoad['controller'];?></td>
+			<td><?php echo $pageLoad['action'];?></td>
+			<td><?php echo $pageLoad['status'];?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View', true), array('controller' => 'page_loads', 'action' => 'view', $pageLoad['id'])); ?>
+				<?php echo $this->Html->link(__('Edit', true), array('controller' => 'page_loads', 'action' => 'edit', $pageLoad['id'])); ?>
+				<?php echo $this->Html->link(__('Delete', true), array('controller' => 'page_loads', 'action' => 'delete', $pageLoad['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $pageLoad['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Page Load', true), array('controller' => 'page_loads', 'action' => 'add'));?> </li>
+		</ul>
+	</div>
+</div>

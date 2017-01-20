@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/opi/!svn/ver/3/app/config/schema
+END
+i18n.php
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/opi/!svn/ver/3/app/config/schema/i18n.php
+END
+db_acl.php
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/opi/!svn/ver/3/app/config/schema/db_acl.php
+END
+sessions.php
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/opi/!svn/ver/3/app/config/schema/sessions.php
+END

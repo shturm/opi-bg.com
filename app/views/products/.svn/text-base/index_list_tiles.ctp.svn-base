@@ -1,0 +1,10 @@
+<table class="product-view-table" >
+   <tr>
+     <th></th>
+     <th>Продукт</th>
+     <th>Група</th>
+     <th>Цена (лв.)</th>
+     <th></th>
+   </tr>
+   <? echo $this->element('product_index_list_tiles', array('products' => $products)); ?>
+</table>

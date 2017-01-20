@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/opi/!svn/ver/10/app/views/products
+END
+view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/opi/!svn/ver/10/app/views/products/view.ctp
+END
+_index_paginated_template.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/opi/!svn/ver/3/app/views/products/_index_paginated_template.ctp
+END
+admin_edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/opi/!svn/ver/3/app/views/products/admin_edit.ctp
+END
+admin_index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/opi/!svn/ver/3/app/views/products/admin_index.ctp
+END
+admin_add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/opi/!svn/ver/3/app/views/products/admin_add.ctp
+END
+admin_view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/opi/!svn/ver/3/app/views/products/admin_view.ctp
+END
+delete.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/opi/!svn/ver/3/app/views/products/delete.ctp
+END
+index_list.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/opi/!svn/ver/10/app/views/products/index_list.ctp
+END
+index_list_tiles.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/opi/!svn/ver/10/app/views/products/index_list_tiles.ctp
+END
+edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/opi/!svn/ver/3/app/views/products/edit.ctp
+END
+index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/opi/!svn/ver/10/app/views/products/index.ctp
+END
+add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/opi/!svn/ver/3/app/views/products/add.ctp
+END
+cart.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/opi/!svn/ver/3/app/views/products/cart.ctp
+END
