@@ -3,11 +3,11 @@ var CoreCart =
 {
  //General Cart
  //XHR urls
- index_url:'http://opi-bg.com/cart/index',
- change_url:"http://opi-bg.com/cart/change",
- add_url:"http://opi-bg.com/cart/add",
- remove_url:"http://opi-bg.com/cart/remove",
- trim_url:"http://opi-bg.com/cart/trim",
+ index_url:'/cart/index',
+ change_url:"/cart/change",
+ add_url:"/cart/add",
+ remove_url:"/cart/remove",
+ trim_url:"/cart/trim",
  total_price:0,
  step_number:0,
  
